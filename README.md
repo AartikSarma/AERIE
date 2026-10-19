@@ -1,0 +1,54 @@
+# AERIE: Augmenting EHR Research with ICU biospEcimens
+
+[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
+![Maturity](https://img.shields.io/badge/maturity-draft-lightgrey)
+
+AERIE is a biospecimen data standard for the [CLIF Consortium](https://clif-icu.com/). Several CLIF sites hold research biobanks. AERIE puts the assay results from those specimens in two tables that join to the same patients and hospitalizations as the [Common Longitudinal ICU data Format (CLIF)](https://github.com/Common-Longitudinal-ICU-data-Format/CLIF) EHR tables. Investigators can then align a cytokine level or a transcriptome with the ventilator settings, medications, and outcomes CLIF already records.
+
+AERIE is a nested study within the CLIF cohort, and the repository follows CLIF's layout: a data dictionary in `ddl/` and controlled vocabularies (mCIDE, the minimum Common ICU Data Elements) in `mCIDE/`.
+
+## Tables
+
+AERIE 0.1 defines two tables, split by the shape of the result.
+
+**`biomarkers`** holds results that are one value for one named analyte: one row per specimen, study, assay run, and analyte. Each row carries the analyte as recorded (`analyte_name`), a standard identifier (`analyte_id`, `analyte_id_type`), and the result as both a string and a number (`result_value`, `result_value_numeric`, `result_unit`). The string column keeps entries such as `<LOD`. ELISA, Luminex, qPCR, and targeted genotyping belong here. So does high-plex affinity proteomics: Olink and SomaScan results go here in long format, one row per protein, even when the vendor delivers them as a matrix.
+
+**`omics`** holds results that live in files: one row per specimen, study, assay run, and file. Each row points to the file (`result_uri`), names its format (`result_format`), and, for files that hold many specimens, gives the key that finds this specimen inside it (`result_specimen_key`). Sequencing, expression and methylation arrays, and metagenomics belong here.
+
+Both tables carry the same specimen and assay columns. `patient_id` and `hospitalization_id` link to CLIF; `hospitalization_id` may be NULL for outpatient or post-discharge draws. `collect_dttm` anchors each result in time against the clinical record. `study_name`, `irb_protocol_id`, and `consent_category` record the governance for each pair of specimen and study, so one specimen can appear under several studies. `assay_id` and `sample_batch_name` identify the run and batch for batch-effect modeling.
+
+The full definitions are in [`ddl/0.1/AERIE0.1_MYSQL_ddl.sql`](ddl/0.1/AERIE0.1_MYSQL_ddl.sql). As in CLIF, each column's `COMMENT` holds a JSON description and its permissible values.
+
+### Choosing a table
+
+The `aerie_table` column of [`aerie_assay_categories.csv`](mCIDE/common/aerie_assay_categories.csv) assigns each assay platform to `biomarkers`, `omics`, or `either`. For a platform marked `either`, such as mass-spectrometry proteomics, metabolomics, or cytometry, the deliverable decides. A quantified value for an analyte with a standard identifier goes in `biomarkers`; for cytometry, that means a gated population such as monocyte HLA-DR. A raw or feature-level file goes in `omics`: spectra, untargeted feature tables, FCS files.
+
+## Conventions
+
+AERIE follows CLIF 2.1 conventions. Raw source strings go in `*_name` columns, and each maps to a controlled vocabulary in the paired `*_category` column (`assay_name` → `assay_category` → `assay_group`). Every datetime is timezone-aware and in UTC, formatted `YYYY-MM-DD HH:MM:SS+00:00`. Sites load values as recorded, without clipping or filtering outliers.
+
+## Repository layout
+
+| Path | Contents |
+|---|---|
+| `ddl/<version>/` | Data dictionary as MySQL DDL |
+| `mCIDE/common/` | Vocabularies shared by both tables: specimen, consent, assay platform, assay group, QC status |
+| `mCIDE/biomarkers/`, `mCIDE/omics/` | Vocabularies used by one table only |
+| `docs/` | Superseded single-table draft, kept for reference |
+| `data/` | Synthetic, name-scrambled analyte lists that show the scale of a biomarker panel (77 analytes) and an Olink panel (1,463 assays); they contain no results |
+| `scripts/check_ddl_mcide.py` | Confirms that the DDL's permissible values match the mCIDE CSVs |
+
+Run the consistency check after editing either the DDL or a vocabulary:
+
+```bash
+uv run scripts/check_ddl_mcide.py
+```
+
+## Open questions
+
+- Both tables repeat the specimen and assay columns. A parent `specimen` table and an `assay` table would remove the repetition, at the cost of more joins for sites and analysts.
+- `result_unit` has no controlled vocabulary yet.
+
+## License
+
+Apache 2.0, matching CLIF.

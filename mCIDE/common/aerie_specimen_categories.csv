@@ -1,0 +1,15 @@
+specimen_category,description,specimen_name_examples
+whole_blood,Unseparated anticoagulated or clotted blood,"EDTA whole blood; PAXgene RNA tube; Tempus tube"
+plasma,Cell-free supernatant of anticoagulated blood,"EDTA plasma; citrate plasma; heparin plasma"
+serum,Cell-free supernatant of clotted blood,"Serum; SST serum; red-top serum"
+pbmc,Peripheral blood mononuclear cells isolated from whole blood,"PBMC; Ficoll PBMC; cryopreserved PBMC"
+urine,Urine,"Spot urine; catheter urine; urine supernatant"
+csf,Cerebrospinal fluid,"CSF; lumbar puncture CSF; EVD CSF"
+bal,Bronchoalveolar lavage fluid or cells,"BAL fluid; mini-BAL; BAL cell pellet"
+tracheal_aspirate,Lower respiratory secretions aspirated through an endotracheal or tracheostomy tube,"ETA; endotracheal aspirate; tracheal aspirate"
+sputum,Expectorated or induced sputum,"Sputum; induced sputum"
+stool,Stool or rectal swab,"Stool; rectal swab"
+saliva,Saliva or oral rinse,"Saliva; oral wash"
+tissue,Solid tissue from biopsy or autopsy,"Lung biopsy; autopsy tissue; FFPE block"
+nasal_swab,Nasal or nasopharyngeal swab,"NP swab; mid-turbinate swab; nasal swab"
+other,Any specimen type not listed above,

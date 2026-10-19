@@ -1,0 +1,27 @@
+assay_category,description,assay_name_examples,assay_group,aerie_table
+elisa,Enzyme-linked immunosorbent assay for one analyte per well,"IL-6 ELISA; sTNFR1 ELISA; MSD single-plex",targeted_immunoassay,biomarkers
+luminex,Bead-based multiplex immunoassay,"Luminex 41-plex cytokine panel; Bio-Plex Pro Human Cytokine 27-plex",targeted_immunoassay,biomarkers
+olink,Olink proximity extension assay reported per protein,"Olink Explore 3072; Olink Target 96 Inflammation",proteomics,biomarkers
+somascan,SomaLogic aptamer-based proteomic assay reported per aptamer,"SomaScan 7k; SomaScan 11k",proteomics,biomarkers
+ms_proteomics,Mass spectrometry proteomics,"DIA LC-MS/MS plasma proteomics; TMT 16-plex",proteomics,either
+qpcr,Quantitative PCR for a defined set of transcripts or targets,"TaqMan qPCR; RT-qPCR interferon signature",transcriptomics,biomarkers
+snp_genotyping,Targeted genotyping of a defined set of variants,"TaqMan SNP genotyping; APOE genotype",genomics,biomarkers
+sanger_sequencing,Sanger sequencing of a defined locus,"Sanger sequencing",genomics,omics
+targeted_sequencing,Next-generation sequencing of a targeted gene panel or amplicon set,"Targeted gene panel; amplicon sequencing",genomics,omics
+long_read_sequencing,Long-read sequencing,"PacBio HiFi; Oxford Nanopore",genomics,omics
+rna_seq_bulk,Bulk RNA sequencing,"Bulk RNA-seq; whole blood RNA-seq; 3' Tag-seq",transcriptomics,omics
+rna_seq_single_cell,Single-cell or single-nucleus RNA sequencing,"10x Chromium 3'; scRNA-seq; snRNA-seq",transcriptomics,omics
+microarray_expression,Gene expression microarray,"Affymetrix Human Gene 2.0 ST; Illumina HT-12",transcriptomics,omics
+gwas_array,Genome-wide genotyping array,"Illumina Global Screening Array; Affymetrix Axiom",genomics,omics
+wes,Whole-exome sequencing,"WES; exome sequencing",genomics,omics
+wgs,Whole-genome sequencing,"WGS; 30x whole genome",genomics,omics
+methylation_epic,Illumina Infinium MethylationEPIC array,"EPIC v1; EPIC v2",epigenomics,omics
+methylation_450k,Illumina Infinium HumanMethylation450 array,"450K array",epigenomics,omics
+lc_ms_metabolomics,Liquid chromatography mass spectrometry metabolomics or lipidomics,"Untargeted LC-MS; Metabolon HD4; targeted lipid panel",metabolomics,either
+gc_ms_metabolomics,Gas chromatography mass spectrometry metabolomics,"Untargeted GC-MS; SCFA panel",metabolomics,either
+nmr_metabolomics,Nuclear magnetic resonance metabolomics,"Nightingale NMR; 1H NMR",metabolomics,either
+16s_amplicon,16S rRNA gene amplicon sequencing,"16S V4; 16S V3-V4",microbiomics,omics
+shotgun_metagenomics,Shotgun metagenomic or metatranscriptomic sequencing,"Shotgun metagenomics; mNGS",microbiomics,omics
+flow_cytometry,Fluorescence flow cytometry,"14-color immunophenotyping; monocyte HLA-DR",cytometry,either
+mass_cytometry,Mass cytometry,"CyTOF; Maxpar Direct Immune Profiling",cytometry,either
+other,Any assay platform not listed above,,other,either
