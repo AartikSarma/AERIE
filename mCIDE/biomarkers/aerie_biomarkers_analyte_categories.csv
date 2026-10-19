@@ -1,0 +1,61 @@
+analyte_category,description,analyte_name_examples
+ang1,Angiopoietin-1,ang1
+ang2,Angiopoietin-2,ang2
+ccl8,CCL8 (monocyte chemoattractant protein 2; MCP-2),ccl8mcp2
+cotinine,Cotinine (nicotine metabolite),cotinine
+cx3cl1,CX3CL1 (fractalkine),cx3cl1
+cxcl9,CXCL9 (monokine induced by gamma interferon; MIG),cxcl9mig
+d_dimer,D-dimer,ddimer
+dna,DNA (meaning to be confirmed),dna
+dnase,DNase (meaning to be confirmed),dnase
+e_selectin,Soluble E-selectin,eselectin
+gdf15,Growth differentiation factor 15,gdf15
+gm_csf,Granulocyte-macrophage colony-stimulating factor,gmcsf
+hydroxycotinine,trans-3'-hydroxycotinine (nicotine metabolite; reading of source name to be confirmed),hc3
+icam1,Soluble intercellular adhesion molecule 1,icam1
+ifn_gamma,Interferon gamma,ifngamma
+il1_beta,Interleukin-1 beta,il1beta
+il1ra,Interleukin-1 receptor antagonist,il1ra
+il1r2,Soluble interleukin-1 receptor type II,il1rii
+il4,Interleukin-4,il4
+il6,Interleukin-6,il6
+il8,Interleukin-8 (CXCL8),il8
+il10,Interleukin-10,il10
+il13,Interleukin-13,il13
+il18,Interleukin-18,il18
+il27,Interleukin-27,il27
+ip10,Interferon gamma-induced protein 10 (CXCL10),ip10
+mip1_alpha,Macrophage inflammatory protein 1 alpha (CCL3),mip1alpha
+mmp8,Matrix metalloproteinase-8,mmp8
+mmp9,Matrix metalloproteinase-9,mmp9
+nets,Neutrophil extracellular traps (assay to be confirmed),nets
+nnal,"Total NNAL, 4-(methylnitrosamino)-1-(3-pyridyl)-1-butanol (tobacco-specific nitrosamine metabolite)",nnal
+nnal_free,Free (unconjugated) NNAL,freennal
+olfm4,Olfactomedin-4,olfm4
+pai1,Plasminogen activator inhibitor-1,pai1
+procalcitonin,Procalcitonin,pct
+protein_c,Protein C,proc
+p_selectin,Soluble P-selectin,pselectin
+rage,Soluble receptor for advanced glycation end products,rage
+sp_d,Surfactant protein D,spd
+telomere_length,Leukocyte telomere length,telomerelength
+thrombomodulin,Soluble thrombomodulin,thrombomodulin
+tnf_alpha,Tumor necrosis factor alpha,tnfalpha
+tnfr1,Soluble tumor necrosis factor receptor 1,tnfr1
+trem1,Soluble triggering receptor expressed on myeloid cells 1,trem1
+triglycerides,Triglycerides,triglyceride
+vegf,Vascular endothelial growth factor,vegf
+vwf,Von Willebrand factor antigen,vwf
+total_protein,Total protein,totalprotein
+creatinine,Creatinine,cr
+aama,"AAMA, N-acetyl-S-(2-carbamoylethyl)-L-cysteine (acrylamide metabolite; reading to be confirmed)",aama
+cnema,"CNEMA, N-acetyl-S-(2-cyanoethyl)-L-cysteine (acrylonitrile metabolite; reading to be confirmed)",cnema
+hema,"HEMA, N-acetyl-S-(2-hydroxyethyl)-L-cysteine (ethylene oxide, vinyl chloride, and acrylonitrile metabolite; reading to be confirmed)",hema
+hpma_2,"2-HPMA, N-acetyl-S-(2-hydroxypropyl)-L-cysteine (propylene oxide metabolite; reading to be confirmed)",hpma2
+hpma_3,"3-HPMA, N-acetyl-S-(3-hydroxypropyl)-L-cysteine (acrolein metabolite; reading to be confirmed)",hpma3
+hpmma,"HPMMA, N-acetyl-S-(3-hydroxypropyl-1-methyl)-L-cysteine (crotonaldehyde metabolite; reading to be confirmed)",hpmma
+mhbma_1_2,"MHBMA-1 and MHBMA-2, monohydroxybutenyl mercapturic acids (1,3-butadiene metabolites; reading to be confirmed)",mhbma12
+mhbma_3,"MHBMA-3, monohydroxybutenyl mercapturic acid isomer 3 (1,3-butadiene metabolite; reading to be confirmed)",mhbma3
+mma,MMA (meaning to be confirmed),mma
+pma,"PMA, S-phenylmercapturic acid (benzene metabolite; reading to be confirmed)",pma
+other,Any analyte not listed above; identify it with analyte_id and analyte_id_type,

@@ -37,16 +37,9 @@ columns:
   - whole_blood
   - plasma
   - serum
-  - pbmc
+  - hme
   - urine
-  - csf
-  - bal
-  - tracheal_aspirate
-  - sputum
-  - stool
-  - saliva
-  - tissue
-  - nasal_swab
+  - hair
   - other
 - name: study_name
   data_type: VARCHAR

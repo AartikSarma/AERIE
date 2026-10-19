@@ -30,6 +30,7 @@ The YAML schemas follow clifpy's CLIF 3.0 schema files (`clifpy/schemas/3.0/*_sc
 
 - Two tables, split by result shape, not platform. `biomarkers`: one scalar per (specimen, study, assay run, analyte), with `analyte_*` and `result_value*`/`result_unit`. `omics`: one file pointer per (specimen, study, assay run, file), with `result_uri`, `result_specimen_key`, `result_format`. The single-table draft in `docs/` was rejected as unwieldy; do not reintroduce it.
 - Olink and SomaScan go in `biomarkers` in long format, even when delivered as a matrix.
+- Vocabularies grow from evidence, not upfront completeness. `analyte_category` (paired with `analyte_name`, like CLIF's `lab_category`) and `specimen_category` hold only what the UCSF EARLI biobank inventory contains, plus `other`. Add categories when a site's inventory shows them; do not pad lists speculatively. High-plex panels map to `other` and are identified by `analyte_id`.
 - Platforms marked `either` (MS proteomics, metabolomics, cytometry) go by deliverable: a quantified value for a standard-ID analyte goes to `biomarkers`, a raw or feature-level file to `omics`.
 - `specimen_name` was added beside `specimen_category` to keep CLIF's raw-name/category pairing; the draft lacked it.
 - CLIF 3.0 has no tables that overlap with AERIE (confirmed by the project lead, who sits on the CLIF Steering Committee). Do not reopen this.
@@ -42,3 +43,5 @@ AERIE is designed in parallel with CLIF 3.0 and follows its conventions. `patien
 ## `data/`
 
 Both CSVs are synthetic, name-scrambled lists named for the EARLI cohort; the strings map to no real analyte. `earli_biomarker_synth.csv` has 77 analytes against four `sample_type` levels; `earli_olink_synth.csv` has 1,463 Olink assay names. They contain no results, so never use them as result data or as fixtures that pretend to be measurements.
+
+`earli_sample_counts.csv` in the repository root is the real UCSF EARLI biobank inventory (sample type, analyte, count). It is gitignored and local-only: never commit it, and never copy its counts into any tracked file, commit message, or PR. Analyte and sample-type names from it may appear in the mCIDE.
