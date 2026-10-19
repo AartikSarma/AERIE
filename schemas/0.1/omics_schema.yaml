@@ -34,10 +34,11 @@ columns:
   is_category_column: true
   is_group_column: false
   permissible_values:
-  - whole_blood
-  - plasma
-  - serum
+  - blood
   - hme
+  - bal
+  - tracheal_aspirate
+  - nasal_swab
   - urine
   - hair
   - other

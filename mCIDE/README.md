@@ -12,7 +12,7 @@ Each CSV defines the permissible values of one category variable in the AERIE ta
 | `biomarkers/aerie_biomarkers_analyte_categories.csv` | `analyte_category` | biomarkers |
 | `biomarkers/aerie_biomarkers_analyte_id_types.csv` | `analyte_id_type` | biomarkers |
 
-The analyte and specimen vocabularies are drafts built from the UCSF EARLI biobank inventory. They hold only what that biobank contains, plus `other`; categories for other sites' specimens and analytes are added as those sites join. High-plex panels such as Olink map to `other` and rely on `analyte_id` rather than a category per protein.
+The analyte and specimen vocabularies are drafts built from the UCSF EARLI biobank inventory. They hold what that biobank contains, plus the respiratory specimens `bal`, `tracheal_aspirate`, and `nasal_swab` and an `other` catch-all; categories for other sites' specimens and analytes are added as those sites join. `specimen_category` records compartment, not component, so plasma, serum, and whole blood are all `blood`. High-plex panels such as Olink map to `other` and rely on `analyte_id` rather than a category per protein. Derived measures such as ratios have no category; calculate them at analysis.
 | `omics/aerie_omics_result_formats.csv` | `result_format` | omics |
 
 `aerie_assay_categories.csv` has two extra columns. `assay_group` maps each platform to its group. `aerie_table` says which table the platform's results belong in: `biomarkers`, `omics`, or `either`.
