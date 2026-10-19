@@ -45,13 +45,13 @@ vegf,Vascular endothelial growth factor,vegf
 vwf,Von Willebrand factor antigen,vwf
 total_protein,Total protein,totalprotein
 creatinine,Creatinine,cr
-aama,"AAMA, N-acetyl-S-(2-carbamoylethyl)-L-cysteine (acrylamide metabolite; reading to be confirmed)",aama
-cnema,"CNEMA, N-acetyl-S-(2-cyanoethyl)-L-cysteine (acrylonitrile metabolite; reading to be confirmed)",cnema
-hema,"HEMA, N-acetyl-S-(2-hydroxyethyl)-L-cysteine (ethylene oxide, vinyl chloride, and acrylonitrile metabolite; reading to be confirmed)",hema
-hpma_2,"2-HPMA, N-acetyl-S-(2-hydroxypropyl)-L-cysteine (propylene oxide metabolite; reading to be confirmed)",hpma2
-hpma_3,"3-HPMA, N-acetyl-S-(3-hydroxypropyl)-L-cysteine (acrolein metabolite; reading to be confirmed)",hpma3
-hpmma,"HPMMA, N-acetyl-S-(3-hydroxypropyl-1-methyl)-L-cysteine (crotonaldehyde metabolite; reading to be confirmed)",hpmma
-mhbma_1_2,"MHBMA-1 and MHBMA-2, monohydroxybutenyl mercapturic acids (1,3-butadiene metabolites; reading to be confirmed)",mhbma12
-mhbma_3,"MHBMA-3, monohydroxybutenyl mercapturic acid isomer 3 (1,3-butadiene metabolite; reading to be confirmed)",mhbma3
-pma,"PMA, S-phenylmercapturic acid (benzene metabolite; reading to be confirmed)",pma
+aama,"AAMA, N-acetyl-S-(2-carbamoylethyl)-L-cysteine (acrylamide metabolite)",aama
+cnema,"CNEMA, N-acetyl-S-(2-cyanoethyl)-L-cysteine (acrylonitrile metabolite)",cnema
+hema,"HEMA, N-acetyl-S-(2-hydroxyethyl)-L-cysteine (ethylene oxide, vinyl chloride, and acrylonitrile metabolite)",hema
+hpma_2,"2-HPMA, N-acetyl-S-(2-hydroxypropyl)-L-cysteine (propylene oxide metabolite)",hpma2
+hpma_3,"3-HPMA, N-acetyl-S-(3-hydroxypropyl)-L-cysteine (acrolein metabolite)",hpma3
+hpmma,"HPMMA, N-acetyl-S-(3-hydroxypropyl-1-methyl)-L-cysteine (crotonaldehyde metabolite)",hpmma
+mhbma_1_2,"MHBMA-1 and MHBMA-2, monohydroxybutenyl mercapturic acids (1,3-butadiene metabolites)",mhbma12
+mhbma_3,"MHBMA-3, monohydroxybutenyl mercapturic acid isomer 3 (1,3-butadiene metabolite)",mhbma3
+pma,"PMA, S-phenylmercapturic acid (benzene metabolite)",pma
 other,Any analyte not listed above; identify it with analyte_id and analyte_id_type,dna; dnase; nets; mma
