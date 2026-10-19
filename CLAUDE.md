@@ -16,6 +16,8 @@ uv run scripts/check_consistency.py   # DDL, mCIDE CSVs, and YAML schemas must a
 
 Run it after any edit to the DDL, an mCIDE CSV, or a YAML schema. A change to a column or vocabulary touches all three.
 
+Dependencies are managed with uv (`pyproject.toml`, `uv.lock`); the consistency script also declares its own inline.
+
 ## How the DDL, mCIDE, and YAML schemas fit together
 
 Each DDL column has a `COMMENT` holding JSON with `description` and `permissible`, as in CLIF. When a column has a controlled vocabulary, `permissible` is a bracketed list followed by a link to the mCIDE CSV, e.g. `[pass, fail, flagged, na](https://github.com/AartikSarma/AERIE/blob/main/mCIDE/common/aerie_qc_categories.csv)`. The check script parses those links, so the list and the CSV must change together. Comments must stay valid JSON inside single-quoted SQL: avoid both quote characters in descriptions.
@@ -45,5 +47,3 @@ AERIE is designed in parallel with CLIF 3.0 and follows its conventions. `patien
 ## `data/`
 
 Both CSVs are synthetic, name-scrambled lists named for the EARLI cohort; the strings map to no real analyte. `earli_biomarker_synth.csv` has 77 analytes against four `sample_type` levels; `earli_olink_synth.csv` has 1,463 Olink assay names. They contain no results, so never use them as result data or as fixtures that pretend to be measurements.
-
-`earli_sample_counts.csv` in the repository root is the real UCSF EARLI biobank inventory (sample type, analyte, count). It is gitignored and local-only: never commit it, and never copy its counts into any tracked file, commit message, or PR. Analyte and sample-type names from it may appear in the mCIDE.

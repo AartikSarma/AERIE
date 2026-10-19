@@ -29,6 +29,7 @@ CREATE TABLE biomarkers (
   result_value VARCHAR COMMENT '{"description": "Result as recorded in the source, kept as a string to preserve non-numeric entries such as <LOD or indeterminate.", "permissible": "No restriction"}',
   result_value_numeric DOUBLE COMMENT '{"description": "Numeric part of result_value. NULL when the result is non-numeric.", "permissible": "Numeric"}',
   result_unit VARCHAR COMMENT '{"description": "Unit of the result. Required when result_value_numeric is non-null.", "permissible": "e.g. pg/mL, NPX, RFU, log2_intensity, mmol/L, percent, count"}',
+  qc_name VARCHAR COMMENT '{"description": "Quality-control note as recorded in the source, e.g. <LOD, Invalid, or Extrapolated. NULL when the source records no note.", "permissible": "No restriction"}',
   qc_category VARCHAR COMMENT '{"description": "Quality-control status of this result.", "permissible": "[pass, fail, flagged, na](https://github.com/AartikSarma/AERIE/blob/main/mCIDE/common/aerie_qc_categories.csv)"}',
   FOREIGN KEY (patient_id) REFERENCES patient(patient_id),
   FOREIGN KEY (hospitalization_id) REFERENCES hospitalization(hospitalization_id)
@@ -58,6 +59,7 @@ CREATE TABLE omics (
   result_uri VARCHAR COMMENT '{"description": "Path, URL, or accession for the result file. Any scheme is permitted, e.g. s3://, gs://, /mnt/, GSE12345, PXD012345.", "permissible": "No restriction"}',
   result_specimen_key VARCHAR COMMENT '{"description": "For multi-specimen files, the identifier used inside the file to locate this specimen, e.g. a count-matrix column header, a VCF sample ID, or a value of obs[sample_id] in an AnnData. NULL if the file holds one specimen or uses specimen_id directly.", "permissible": "No restriction"}',
   result_format VARCHAR COMMENT '{"description": "File format of result_uri.", "permissible": "[csv, tsv, parquet, h5ad, h5, mtx, vcf, bcf, fastq, bam, cram, idat, mzml, na, other](https://github.com/AartikSarma/AERIE/blob/main/mCIDE/omics/aerie_omics_result_formats.csv)"}',
+  qc_name VARCHAR COMMENT '{"description": "Quality-control note as recorded in the source, e.g. <LOD, Invalid, or Extrapolated. NULL when the source records no note.", "permissible": "No restriction"}',
   qc_category VARCHAR COMMENT '{"description": "Quality-control status of this result file.", "permissible": "[pass, fail, flagged, na](https://github.com/AartikSarma/AERIE/blob/main/mCIDE/common/aerie_qc_categories.csv)"}',
   FOREIGN KEY (patient_id) REFERENCES patient(patient_id),
   FOREIGN KEY (hospitalization_id) REFERENCES hospitalization(hospitalization_id)

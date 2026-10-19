@@ -220,6 +220,11 @@ columns:
   required: false
   is_category_column: false
   is_group_column: false
+- name: qc_name
+  data_type: VARCHAR
+  required: false
+  is_category_column: false
+  is_group_column: false
 - name: qc_category
   data_type: VARCHAR
   required: true

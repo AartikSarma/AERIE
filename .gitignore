@@ -2,3 +2,8 @@
 __pycache__/
 .venv/
 earli_sample_counts.csv
+*.parquet
+etl/earli/
+tests/test_earli_to_aerie.py
+CLAUDE.local.md
+.pytest_cache/
