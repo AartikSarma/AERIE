@@ -1,0 +1,16 @@
+result_format,description
+csv,Comma-separated values
+tsv,Tab-separated values
+parquet,Apache Parquet
+h5ad,AnnData HDF5 file
+h5,Generic HDF5 file (e.g. 10x Genomics feature-barcode matrix)
+mtx,Matrix Market sparse matrix
+vcf,Variant Call Format
+bcf,Binary Variant Call Format
+fastq,Raw sequencing reads
+bam,Binary Alignment Map
+cram,Compressed reference-based alignment
+idat,Illumina array intensity data
+mzml,Mass spectrometry data in mzML
+na,result_uri is a repository accession (e.g. GEO or PRIDE) rather than a file
+other,Any file format not listed above

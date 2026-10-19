@@ -1,0 +1,5 @@
+qc_category,description
+pass,Result passed the site's or vendor's quality control
+fail,Result failed quality control and should be excluded from analysis
+flagged,"Result passed with a warning (e.g., Olink QC warning, below limit of detection, hemolysis)"
+na,No quality control was performed or reported

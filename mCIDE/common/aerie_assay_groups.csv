@@ -1,0 +1,10 @@
+assay_group,description
+proteomics,Multiplexed protein measurement by affinity reagents or mass spectrometry
+transcriptomics,"RNA measurement by sequencing, array, or PCR"
+genomics,DNA sequence or genotype measurement
+epigenomics,DNA methylation or other epigenetic marks
+metabolomics,Small-molecule or lipid measurement
+microbiomics,Measurement of microbial communities
+cytometry,Single-cell measurement of protein markers by flow or mass cytometry
+targeted_immunoassay,Immunoassay for one or a small panel of predefined analytes
+other,Any assay group not listed above

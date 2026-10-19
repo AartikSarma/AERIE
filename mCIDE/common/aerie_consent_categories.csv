@@ -1,0 +1,7 @@
+consent_category,description
+broad_research,Participant consented to future research use of the specimen beyond the named study
+specific_use,Consent limits use of the specimen to the named study or a defined set of analyses
+opt_out,Specimen is used under an opt-out model in which participants were notified and did not decline
+waiver_of_consent,The IRB waived the requirement for consent for this use
+withdrawn,"Participant withdrew consent; results must be excluded from new analyses"
+other,Any consent model not listed above

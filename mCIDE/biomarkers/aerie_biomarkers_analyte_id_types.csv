@@ -1,0 +1,12 @@
+analyte_id_type,description,analyte_id_examples
+uniprot,UniProt protein accession; preferred for proteins,"P05231; P01375"
+hgnc,HGNC gene symbol,"IL6; TNF"
+ensembl_gene,Ensembl gene identifier,ENSG00000136244
+ensembl_transcript,Ensembl transcript identifier (ENST prefix),
+chebi,ChEBI chemical entity identifier,CHEBI:17234
+hmdb,Human Metabolome Database identifier,HMDB0000122
+kegg,KEGG compound identifier,C00031
+ncbi_taxonomy,NCBI Taxonomy identifier for an organism,1280
+dbsnp,dbSNP reference SNP identifier,rs7412
+loinc,LOINC code for a clinical laboratory test,26881-3
+other,Any namespace not listed above,
