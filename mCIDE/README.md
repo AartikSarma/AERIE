@@ -14,4 +14,4 @@ Each CSV defines the permissible values of one category variable in the AERIE ta
 
 `aerie_assay_categories.csv` has two extra columns. `assay_group` maps each platform to its group. `aerie_table` says which table the platform's results belong in: `biomarkers`, `omics`, or `either`.
 
-After changing a CSV, update the matching permissible list in the DDL and run `uv run scripts/check_ddl_mcide.py` from the repository root.
+After changing a CSV, update the matching permissible lists in the DDL and in `schemas/`, then run `uv run scripts/check_consistency.py` from the repository root.
