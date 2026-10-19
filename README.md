@@ -3,7 +3,7 @@
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 ![Maturity](https://img.shields.io/badge/maturity-draft-lightgrey)
 
-AERIE is a biospecimen data standard for the [CLIF Consortium](https://clif-icu.com/). Several CLIF sites hold research biobanks. AERIE puts the assay results from those specimens in two tables that join to the same patients and hospitalizations as the [Common Longitudinal ICU data Format (CLIF)](https://github.com/Common-Longitudinal-ICU-data-Format/CLIF) EHR tables. Investigators can then align a cytokine level or a transcriptome with the ventilator settings, medications, and outcomes CLIF already records.
+AERIE is a biospecimen data standard for the [CLIF Consortium](https://clif-icu.com/). Several CLIF sites hold research biobanks. AERIE puts the assay results from those specimens in two tables that join by patient to the [Common Longitudinal ICU data Format (CLIF)](https://github.com/Common-Longitudinal-ICU-data-Format/CLIF) EHR tables, and it is being developed alongside CLIF 3.0. Investigators can then align a cytokine level or a transcriptome with the ventilator settings, medications, and outcomes CLIF already records.
 
 AERIE is a nested study within the CLIF cohort, and the repository follows CLIF's layout: a data dictionary in `ddl/` and controlled vocabularies (mCIDE, the minimum Common ICU Data Elements) in `mCIDE/`.
 
@@ -15,7 +15,7 @@ AERIE 0.1 defines two tables, split by the shape of the result.
 
 **`omics`** holds results that live in files: one row per specimen, study, assay run, and file. Each row points to the file (`result_uri`), names its format (`result_format`), and, for files that hold many specimens, gives the key that finds this specimen inside it (`result_specimen_key`). Sequencing, expression and methylation arrays, and metagenomics belong here.
 
-Both tables carry the same specimen and assay columns. `patient_id` and `hospitalization_id` link to CLIF; `hospitalization_id` may be NULL for outpatient or post-discharge draws. `collect_dttm` anchors each result in time against the clinical record. `study_name`, `irb_protocol_id`, and `consent_category` record the governance for each pair of specimen and study, so one specimen can appear under several studies. `assay_id` and `sample_batch_name` identify the run and batch for batch-effect modeling.
+Both tables carry the same specimen and assay columns. `patient_id` is the join key to CLIF; each site maps its biobank participant IDs to CLIF patient IDs during ETL. Most research repositories do not link a specimen to an encounter, so `hospitalization_id` is optional and filled only when the biobank record carries that link. `collect_dttm` is required: it anchors each result against the clinical record, and analysts use it to place a specimen within a hospitalization by comparing it with `admission_dttm` and `discharge_dttm`. `study_name`, `irb_protocol_id`, and `consent_category` record the governance for each pair of specimen and study, so one specimen can appear under several studies. `assay_id` and `sample_batch_name` identify the run and batch for batch-effect modeling.
 
 The full definitions are in [`ddl/0.1/AERIE0.1_MYSQL_ddl.sql`](ddl/0.1/AERIE0.1_MYSQL_ddl.sql). As in CLIF, each column's `COMMENT` holds a JSON description and its permissible values.
 
@@ -25,7 +25,7 @@ The `aerie_table` column of [`aerie_assay_categories.csv`](mCIDE/common/aerie_as
 
 ## Conventions
 
-AERIE follows CLIF 2.1 conventions. Raw source strings go in `*_name` columns, and each maps to a controlled vocabulary in the paired `*_category` column (`assay_name` → `assay_category` → `assay_group`). Every datetime is timezone-aware and in UTC, formatted `YYYY-MM-DD HH:MM:SS+00:00`. Sites load values as recorded, without clipping or filtering outliers.
+AERIE follows CLIF 3.0 conventions. Raw source strings go in `*_name` columns, and each maps to a controlled vocabulary in the paired `*_category` column (`assay_name` → `assay_category` → `assay_group`). Every datetime is timezone-aware and in UTC, formatted `YYYY-MM-DD HH:MM:SS+00:00`. Sites load values as recorded, without clipping or filtering outliers.
 
 ## Repository layout
 

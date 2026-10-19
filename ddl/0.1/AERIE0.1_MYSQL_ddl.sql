@@ -1,5 +1,5 @@
--- AERIE 0.1 (draft). Tables extend CLIF 2.1: patient_id and hospitalization_id
--- reference the CLIF patient and hospitalization tables.
+-- AERIE 0.1 (draft), developed alongside CLIF 3.0. Results join to CLIF through
+-- patient_id; collect_dttm places each specimen against the patient's hospitalizations.
 
 -- -----------------------------------------------------
 -- Table: biomarkers
@@ -7,10 +7,10 @@
 -- single value for a named analyte, including high-plex affinity proteomics (Olink, SomaScan).
 -- -----------------------------------------------------
 CREATE TABLE biomarkers (
-  patient_id VARCHAR COMMENT '{"description": "Unique identifier for each patient. Matches patient.patient_id.", "permissible": "No restriction"}',
-  hospitalization_id VARCHAR COMMENT '{"description": "ID variable for the encounter during which the specimen was collected. NULL permitted for outpatient or post-discharge draws that remain part of the AERIE substudy.", "permissible": "Must match hospitalization.hospitalization_id when non-null"}',
+  patient_id VARCHAR COMMENT '{"description": "CLIF patient identifier and the primary join key to CLIF. Sites map biobank participant IDs to patient.patient_id during ETL.", "permissible": "Must match patient.patient_id"}',
+  hospitalization_id VARCHAR COMMENT '{"description": "Optional. ID of the encounter during which the specimen was collected, filled only when the biobank record itself links the specimen to an encounter. Most research repositories do not, so the join to CLIF is by patient_id, and analysts assign hospitalizations by comparing collect_dttm with hospitalization.admission_dttm and discharge_dttm.", "permissible": "NULL, or a value of hospitalization.hospitalization_id"}',
   specimen_id VARCHAR COMMENT '{"description": "Site biobank sample identifier. Format is site-defined.", "permissible": "No restriction"}',
-  collect_dttm DATETIME COMMENT '{"description": "Date and time of specimen collection. All datetime variables must be timezone-aware and set to UTC. Primary anchor for time-aligning results to clinical events in other CLIF tables.", "permissible": "Datetime format should be YYYY-MM-DD HH:MM:SS+00:00 (UTC)"}',
+  collect_dttm DATETIME COMMENT '{"description": "Date and time of specimen collection. All datetime variables must be timezone-aware and set to UTC. Required. Anchors each result in time against clinical events in CLIF and assigns it to a hospitalization.", "permissible": "Datetime format should be YYYY-MM-DD HH:MM:SS+00:00 (UTC)"}',
   specimen_name VARCHAR COMMENT '{"description": "Specimen type as recorded in the source biobank, e.g. EDTA plasma.", "permissible": "No restriction"}',
   specimen_category VARCHAR COMMENT '{"description": "Maps specimen_name to a standardized list of specimen types.", "permissible": "[whole_blood, plasma, serum, pbmc, urine, csf, bal, tracheal_aspirate, sputum, stool, saliva, tissue, nasal_swab, other](https://github.com/AartikSarma/AERIE/blob/main/mCIDE/common/aerie_specimen_categories.csv)"}',
   study_name VARCHAR COMMENT '{"description": "Name of the research study under which this row was generated. May be a short alias, e.g. AERIE_Pilot_2024. The same specimen may appear under multiple study_name values.", "permissible": "No restriction"}',
@@ -39,10 +39,10 @@ CREATE TABLE biomarkers (
 -- results (reads, arrays, count matrices, spectra) stored outside the table.
 -- -----------------------------------------------------
 CREATE TABLE omics (
-  patient_id VARCHAR COMMENT '{"description": "Unique identifier for each patient. Matches patient.patient_id.", "permissible": "No restriction"}',
-  hospitalization_id VARCHAR COMMENT '{"description": "ID variable for the encounter during which the specimen was collected. NULL permitted for outpatient or post-discharge draws that remain part of the AERIE substudy.", "permissible": "Must match hospitalization.hospitalization_id when non-null"}',
+  patient_id VARCHAR COMMENT '{"description": "CLIF patient identifier and the primary join key to CLIF. Sites map biobank participant IDs to patient.patient_id during ETL.", "permissible": "Must match patient.patient_id"}',
+  hospitalization_id VARCHAR COMMENT '{"description": "Optional. ID of the encounter during which the specimen was collected, filled only when the biobank record itself links the specimen to an encounter. Most research repositories do not, so the join to CLIF is by patient_id, and analysts assign hospitalizations by comparing collect_dttm with hospitalization.admission_dttm and discharge_dttm.", "permissible": "NULL, or a value of hospitalization.hospitalization_id"}',
   specimen_id VARCHAR COMMENT '{"description": "Site biobank sample identifier. Format is site-defined.", "permissible": "No restriction"}',
-  collect_dttm DATETIME COMMENT '{"description": "Date and time of specimen collection. All datetime variables must be timezone-aware and set to UTC. Primary anchor for time-aligning results to clinical events in other CLIF tables.", "permissible": "Datetime format should be YYYY-MM-DD HH:MM:SS+00:00 (UTC)"}',
+  collect_dttm DATETIME COMMENT '{"description": "Date and time of specimen collection. All datetime variables must be timezone-aware and set to UTC. Required. Anchors each result in time against clinical events in CLIF and assigns it to a hospitalization.", "permissible": "Datetime format should be YYYY-MM-DD HH:MM:SS+00:00 (UTC)"}',
   specimen_name VARCHAR COMMENT '{"description": "Specimen type as recorded in the source biobank, e.g. PAXgene RNA tube.", "permissible": "No restriction"}',
   specimen_category VARCHAR COMMENT '{"description": "Maps specimen_name to a standardized list of specimen types.", "permissible": "[whole_blood, plasma, serum, pbmc, urine, csf, bal, tracheal_aspirate, sputum, stool, saliva, tissue, nasal_swab, other](https://github.com/AartikSarma/AERIE/blob/main/mCIDE/common/aerie_specimen_categories.csv)"}',
   study_name VARCHAR COMMENT '{"description": "Name of the research study under which this row was generated. May be a short alias, e.g. AERIE_Pilot_2024. The same specimen may appear under multiple study_name values.", "permissible": "No restriction"}',
