@@ -11,7 +11,7 @@ AERIE is a nested study within the CLIF cohort, and the repository follows CLIF'
 
 AERIE 0.1 defines two tables, split by the shape of the result.
 
-**`biomarkers`** holds results that are one value for one named analyte: one row per specimen, study, assay run, and analyte. Each row carries the analyte as recorded (`analyte_name`), a standard identifier (`analyte_id`, `analyte_id_type`), and the result as both a string and a number (`result_value`, `result_value_numeric`, `result_unit`). The string column keeps entries such as `<LOD`. ELISA, Luminex, qPCR, and targeted genotyping belong here. So does high-plex affinity proteomics: Olink and SomaScan results go here in long format, one row per protein, even when the vendor delivers them as a matrix.
+**`biomarkers`** holds results that are one value for one named analyte: one row per specimen, study, assay run, and analyte. Each row carries the analyte as recorded (`analyte_name`), its mapping to a minimum set of standardized analytes (`analyte_category`), a standard identifier (`analyte_id`, `analyte_id_type`), and the result as both a string and a number (`result_value`, `result_value_numeric`, `result_unit`). The string column keeps entries such as `<LOD`. ELISA, Luminex, qPCR, and targeted genotyping belong here. So does high-plex affinity proteomics: Olink and SomaScan results go here in long format, one row per protein, even when the vendor delivers them as a matrix.
 
 **`omics`** holds results that live in files: one row per specimen, study, assay run, and file. Each row points to the file (`result_uri`), names its format (`result_format`), and, for files that hold many specimens, gives the key that finds this specimen inside it (`result_specimen_key`). Sequencing, expression and methylation arrays, and metagenomics belong here.
 
@@ -57,7 +57,7 @@ schema = yaml.safe_load(open("schemas/0.1/biomarkers_schema.yaml"))
 validation_issues = validate_dataframe(biomarkers_df, schema)
 ```
 
-The validator checks required columns, data types, UTC datetimes, permissible values, and the mapping from `assay_category` to `assay_group`. It also reports each vocabulary value absent from the table as an "mCIDE coverage gap"; a site with plasma and serum only will see the other specimen types listed there, which is expected.
+The validator checks required columns, data types, UTC datetimes, permissible values, and the mapping from `assay_category` to `assay_group`. It also reports each vocabulary value absent from the table as an "mCIDE coverage gap"; a site with blood and urine only will see the other specimen types listed there, which is expected.
 
 ## Open questions
 

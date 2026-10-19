@@ -34,19 +34,13 @@ columns:
   is_category_column: true
   is_group_column: false
   permissible_values:
-  - whole_blood
-  - plasma
-  - serum
-  - pbmc
-  - urine
-  - csf
+  - blood
+  - hme
   - bal
   - tracheal_aspirate
-  - sputum
-  - stool
-  - saliva
-  - tissue
   - nasal_swab
+  - urine
+  - hair
   - other
 - name: study_name
   data_type: VARCHAR
