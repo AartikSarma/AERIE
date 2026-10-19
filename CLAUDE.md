@@ -35,7 +35,7 @@ mCIDE CSVs follow the CLIF format: `<variable>_category`, `description`, optiona
 
 ## CLIF conventions every AERIE table follows
 
-`patient_id` and `hospitalization_id` are foreign keys into CLIF 2.1 `patient` and `hospitalization`; `hospitalization_id` may be NULL for outpatient or post-discharge draws. Every datetime is timezone-aware UTC, `YYYY-MM-DD HH:MM:SS+00:00`, and `collect_dttm` is the anchor for aligning with other CLIF tables. Category values are lowercase snake_case. Consent and IRB scope attach to a (specimen, study) pair.
+AERIE is designed in parallel with CLIF 3.0 and follows its conventions. `patient_id` is the join key to CLIF `patient`. `hospitalization_id` is optional, because most research repositories do not link specimens to encounters; analysts assign a hospitalization by comparing the required `collect_dttm` with `hospitalization.admission_dttm`/`discharge_dttm`. Do not write ETL or analysis code that assumes `hospitalization_id` is populated. Every datetime is timezone-aware UTC, `YYYY-MM-DD HH:MM:SS+00:00`. Category values are lowercase snake_case. Consent and IRB scope attach to a (specimen, study) pair.
 
 ## `data/`
 
