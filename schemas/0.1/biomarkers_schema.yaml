@@ -34,19 +34,13 @@ columns:
   is_category_column: true
   is_group_column: false
   permissible_values:
-  - whole_blood
-  - plasma
-  - serum
-  - pbmc
-  - urine
-  - csf
+  - blood
+  - hme
   - bal
   - tracheal_aspirate
-  - sputum
-  - stool
-  - saliva
-  - tissue
   - nasal_swab
+  - urine
+  - hair
   - other
 - name: study_name
   data_type: VARCHAR
@@ -127,6 +121,68 @@ columns:
   required: true
   is_category_column: false
   is_group_column: false
+- name: analyte_category
+  data_type: VARCHAR
+  required: true
+  is_category_column: true
+  is_group_column: false
+  permissible_values:
+  - ang1
+  - ang2
+  - ccl8
+  - cotinine
+  - cx3cl1
+  - cxcl9
+  - d_dimer
+  - e_selectin
+  - gdf15
+  - gm_csf
+  - hydroxycotinine
+  - icam1
+  - ifn_gamma
+  - il1_beta
+  - il1ra
+  - il1r2
+  - il4
+  - il6
+  - il8
+  - il10
+  - il13
+  - il18
+  - il27
+  - ip10
+  - mip1_alpha
+  - mmp8
+  - mmp9
+  - nnal
+  - nnal_free
+  - olfm4
+  - pai1
+  - procalcitonin
+  - protein_c
+  - p_selectin
+  - rage
+  - sp_d
+  - telomere_length
+  - thrombomodulin
+  - tnf_alpha
+  - tnfr1
+  - trem1
+  - triglycerides
+  - vegf
+  - vwf
+  - total_protein
+  - creatinine
+  - aama
+  - cnema
+  - hema
+  - hpma_2
+  - hpma_3
+  - hpmma
+  - mhbma_1_2
+  - mhbma_3
+  - pma
+  - other
 - name: analyte_id
   data_type: VARCHAR
   required: false
@@ -187,6 +243,7 @@ required_columns:
   - assay_category
   - assay_group
   - analyte_name
+  - analyte_category
   - result_value
   - qc_category
 
@@ -194,6 +251,7 @@ category_columns:
   - specimen_category
   - consent_category
   - assay_category
+  - analyte_category
   - analyte_id_type
   - qc_category
 
