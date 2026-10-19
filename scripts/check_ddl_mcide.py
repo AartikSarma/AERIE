@@ -16,7 +16,7 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_DDL_PATH = REPO_ROOT / "ddl" / "0.1" / "AERIE0.1_MYSQL_ddl.sql"
-MCIDE_LINK_PATTERN = re.compile(r"^\[(?P<values>[^\]]*)\]\(https://github\.com/AartikSarma/AERIE/blob/main/(?P<path>mCIDE/[^)]+)\)$")
+MCIDE_LINK_PATTERN = re.compile(r"^\[(?P<values>[^\]]*)\]\(https://github\.com/[^/]+/[^/]+/blob/[^/]+/(?P<path>mCIDE/[^)]+)\)$")
 TABLE_PATTERN = re.compile(r"CREATE TABLE (\w+) \((.*?)\n\);", re.DOTALL)
 COLUMN_PATTERN = re.compile(r"^\s*(\w+) \w+ COMMENT '(.*)',?$", re.MULTILINE)
 
@@ -39,6 +39,7 @@ def expected_categories(table_name, column_name, csv_path):
 
 def check_ddl(ddl_path):
     problems = []
+    linked_column_count = 0
     ddl_text = Path(ddl_path).read_text()
     for table_name, table_body in TABLE_PATTERN.findall(ddl_text):
         for column_name, comment_text in COLUMN_PATTERN.findall(table_body):
@@ -50,12 +51,15 @@ def check_ddl(ddl_path):
             link_match = MCIDE_LINK_PATTERN.match(comment["permissible"])
             if not link_match:
                 continue
-            ddl_values = [value.strip() for value in link_match["values"].split(",")]
+            linked_column_count += 1
+            ddl_values =[value.strip() for value in link_match["values"].split(",")]
             mcide_values = expected_categories(table_name, column_name, link_match["path"])
             if ddl_values != mcide_values:
                 problems.append(
                     f"{table_name}.{column_name}: DDL lists {ddl_values} but {link_match['path']} gives {mcide_values}"
                 )
+    if linked_column_count == 0:
+        problems.append("no columns link to an mCIDE CSV; the link pattern may no longer match the DDL")
     return problems
 
 
