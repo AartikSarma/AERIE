@@ -34,15 +34,30 @@ AERIE follows CLIF 3.0 conventions. Raw source strings go in `*_name` columns, a
 | `ddl/<version>/` | Data dictionary as MySQL DDL |
 | `mCIDE/common/` | Vocabularies shared by both tables: specimen, consent, assay platform, assay group, QC status |
 | `mCIDE/biomarkers/`, `mCIDE/omics/` | Vocabularies used by one table only |
+| `schemas/<version>/` | YAML schemas in [clifpy](https://github.com/Common-Longitudinal-ICU-data-Format/clifpy)'s format, for validating a site's tables |
 | `docs/` | Superseded single-table draft, kept for reference |
 | `data/` | Synthetic, name-scrambled analyte lists that show the scale of a biomarker panel (77 analytes) and an Olink panel (1,463 assays); they contain no results |
-| `scripts/check_ddl_mcide.py` | Confirms that the DDL's permissible values match the mCIDE CSVs |
+| `scripts/check_consistency.py` | Confirms that the DDL, the mCIDE CSVs, and the YAML schemas agree |
 
-Run the consistency check after editing either the DDL or a vocabulary:
+Run the consistency check after editing the DDL, a vocabulary, or a schema:
 
 ```bash
-uv run scripts/check_ddl_mcide.py
+uv run scripts/check_consistency.py
 ```
+
+## Validating a site's tables with clifpy
+
+clifpy loads its built-in schemas by CLIF table name, so it does not find AERIE's on its own. Pass an AERIE schema to clifpy's validator directly:
+
+```python
+import yaml
+from clifpy.utils.validator import validate_dataframe
+
+schema = yaml.safe_load(open("schemas/0.1/biomarkers_schema.yaml"))
+validation_issues = validate_dataframe(biomarkers_df, schema)
+```
+
+The validator checks required columns, data types, UTC datetimes, permissible values, and the mapping from `assay_category` to `assay_group`. It also reports each vocabulary value absent from the table as an "mCIDE coverage gap"; a site with plasma and serum only will see the other specimen types listed there, which is expected.
 
 ## Open questions
 

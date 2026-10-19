@@ -6,21 +6,23 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 AERIE (Augmenting EHR Research with ICU biospEcimens) is a biospecimen data standard that complements the Common Longitudinal ICU data Format (CLIF) EHR tables. It is a nested study within the CLIF Consortium cohort: several CLIF sites hold biobanks, and AERIE links their assay results to the patients and hospitalizations already in CLIF. GitHub: `AartikSarma/AERIE`.
 
-The repository mirrors the CLIF repo (`Common-Longitudinal-ICU-data-Format/CLIF`): the data dictionary lives in `ddl/<version>/AERIE<version>_MYSQL_ddl.sql`, and controlled vocabularies (mCIDE) live as CSVs under `mCIDE/`. There is no application code.
+The repository mirrors the CLIF repo (`Common-Longitudinal-ICU-data-Format/CLIF`): the data dictionary lives in `ddl/<version>/AERIE<version>_MYSQL_ddl.sql`, and controlled vocabularies (mCIDE) live as CSVs under `mCIDE/`. `schemas/<version>/` holds YAML schemas in clifpy's format. There is no application code.
 
 ## Commands
 
 ```bash
-uv run scripts/check_ddl_mcide.py   # DDL permissible lists must match the mCIDE CSVs; exits 1 on mismatch
+uv run scripts/check_consistency.py   # DDL, mCIDE CSVs, and YAML schemas must agree; exits 1 on mismatch
 ```
 
-Run it after any edit to the DDL or an mCIDE CSV.
+Run it after any edit to the DDL, an mCIDE CSV, or a YAML schema. A change to a column or vocabulary touches all three.
 
-## How the DDL and mCIDE fit together
+## How the DDL, mCIDE, and YAML schemas fit together
 
 Each DDL column has a `COMMENT` holding JSON with `description` and `permissible`, as in CLIF. When a column has a controlled vocabulary, `permissible` is a bracketed list followed by a link to the mCIDE CSV, e.g. `[pass, fail, flagged, na](https://github.com/AartikSarma/AERIE/blob/main/mCIDE/common/aerie_qc_categories.csv)`. The check script parses those links, so the list and the CSV must change together. Comments must stay valid JSON inside single-quoted SQL: avoid both quote characters in descriptions.
 
 mCIDE CSVs follow the CLIF format: `<variable>_category`, `description`, optional `<variable>_name_examples`. Vocabularies used by both tables go in `mCIDE/common/`; table-specific ones in `mCIDE/biomarkers/` or `mCIDE/omics/`.
+
+The YAML schemas follow clifpy's CLIF 3.0 schema files (`clifpy/schemas/3.0/*_schema.yaml`): per-column `data_type`, `required`, `is_category_column`, `is_group_column`, `permissible_values`, then `required_columns`, `category_columns`, `group_columns`, and `assay_category_to_group_mapping`, which clifpy's validator discovers by its `*_category_to_group_mapping` suffix. `version` is the CLIF version, because clifpy stamps it on validation results; `aerie_version` is AERIE's own. clifpy cannot load these by table name, so sites pass the parsed YAML to `clifpy.utils.validator.validate_dataframe`. Which columns are required is recorded only in the YAML, not the DDL.
 
 `mCIDE/common/aerie_assay_categories.csv` is the hub. Its `assay_group` column maps platform to group, and its `aerie_table` column (`biomarkers`, `omics`, `either`) decides which platforms each table's `assay_category` and `assay_group` lists may contain. The check script derives each table's expected lists from it, so add a platform there first.
 
