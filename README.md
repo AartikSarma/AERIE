@@ -57,7 +57,7 @@ schema = yaml.safe_load(open("schemas/0.1/biomarkers_schema.yaml"))
 validation_issues = validate_dataframe(biomarkers_df, schema)
 ```
 
-The validator checks required columns, data types, UTC datetimes, permissible values, and the mapping from `assay_category` to `assay_group`. It also reports each vocabulary value absent from the table as an "mCIDE coverage gap"; a site with plasma and serum only will see the other specimen types listed there, which is expected.
+The validator checks required columns, data types, UTC datetimes, permissible values, and the mapping from `assay_category` to `assay_group`. It also reports each vocabulary value absent from the table as an "mCIDE coverage gap"; a site with blood and urine only will see the other specimen types listed there, which is expected.
 
 ## Open questions
 

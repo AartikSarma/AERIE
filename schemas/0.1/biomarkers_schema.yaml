@@ -34,10 +34,11 @@ columns:
   is_category_column: true
   is_group_column: false
   permissible_values:
-  - whole_blood
-  - plasma
-  - serum
+  - blood
   - hme
+  - bal
+  - tracheal_aspirate
+  - nasal_swab
   - urine
   - hair
   - other
@@ -133,8 +134,6 @@ columns:
   - cx3cl1
   - cxcl9
   - d_dimer
-  - dna
-  - dnase
   - e_selectin
   - gdf15
   - gm_csf
@@ -155,7 +154,6 @@ columns:
   - mip1_alpha
   - mmp8
   - mmp9
-  - nets
   - nnal
   - nnal_free
   - olfm4
@@ -183,7 +181,6 @@ columns:
   - hpmma
   - mhbma_1_2
   - mhbma_3
-  - mma
   - pma
   - other
 - name: analyte_id
