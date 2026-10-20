@@ -43,7 +43,3 @@ The YAML schemas follow clifpy's CLIF 3.0 schema files (`clifpy/schemas/3.0/*_sc
 ## CLIF conventions every AERIE table follows
 
 AERIE is designed in parallel with CLIF 3.0 and follows its conventions. `patient_id` is the join key to CLIF `patient`. `hospitalization_id` is optional, because most research repositories do not link specimens to encounters; analysts assign a hospitalization by comparing the required `collect_dttm` with `hospitalization.admission_dttm`/`discharge_dttm`. Do not write ETL or analysis code that assumes `hospitalization_id` is populated. Every datetime is timezone-aware UTC, `YYYY-MM-DD HH:MM:SS+00:00`. Category values are lowercase snake_case. Consent and IRB scope attach to a (specimen, study) pair.
-
-## `data/`
-
-Both CSVs are synthetic, name-scrambled lists named for the EARLI cohort; the strings map to no real analyte. `earli_biomarker_synth.csv` has 77 analytes against four `sample_type` levels; `earli_olink_synth.csv` has 1,463 Olink assay names. They contain no results, so never use them as result data or as fixtures that pretend to be measurements.

@@ -36,7 +36,6 @@ AERIE follows CLIF 3.0 conventions. Raw source strings go in `*_name` columns, a
 | `mCIDE/biomarkers/`, `mCIDE/omics/` | Vocabularies used by one table only |
 | `schemas/<version>/` | YAML schemas in [clifpy](https://github.com/Common-Longitudinal-ICU-data-Format/clifpy)'s format, for validating a site's tables |
 | `docs/` | Superseded single-table draft, kept for reference |
-| `data/` | Synthetic, name-scrambled analyte lists that show the scale of a biomarker panel (77 analytes) and an Olink panel (1,463 assays); they contain no results |
 | `scripts/check_consistency.py` | Confirms that the DDL, the mCIDE CSVs, and the YAML schemas agree |
 
 Run the consistency check after editing the DDL, a vocabulary, or a schema:
