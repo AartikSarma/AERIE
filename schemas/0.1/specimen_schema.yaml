@@ -1,0 +1,80 @@
+table_name: specimen
+version: "3.0"  # CLIF version whose conventions AERIE follows; clifpy stamps this on validation results
+aerie_version: "0.1"
+
+columns:
+- name: specimen_id
+  data_type: VARCHAR
+  required: true
+  is_category_column: false
+  is_group_column: false
+- name: patient_id
+  data_type: VARCHAR
+  required: true
+  is_category_column: false
+  is_group_column: false
+- name: hospitalization_id
+  data_type: VARCHAR
+  required: false
+  is_category_column: false
+  is_group_column: false
+- name: study_id
+  data_type: VARCHAR
+  required: true
+  is_category_column: false
+  is_group_column: false
+- name: collect_dttm
+  data_type: DATETIME
+  required: true
+  is_category_column: false
+  is_group_column: false
+- name: timepoint_name
+  data_type: VARCHAR
+  required: false
+  is_category_column: false
+  is_group_column: false
+- name: specimen_name
+  data_type: VARCHAR
+  required: false
+  is_category_column: false
+  is_group_column: false
+- name: specimen_category
+  data_type: VARCHAR
+  required: true
+  is_category_column: true
+  is_group_column: false
+  permissible_values:
+  - blood
+  - hme
+  - bal
+  - tracheal_aspirate
+  - nasal_swab
+  - urine
+  - hair
+  - other
+- name: consent_category
+  data_type: VARCHAR
+  required: true
+  is_category_column: true
+  is_group_column: false
+  permissible_values:
+  - broad_research
+  - specific_use
+  - opt_out
+  - waiver_of_consent
+  - withdrawn
+  - other
+
+required_columns:
+  - specimen_id
+  - patient_id
+  - study_id
+  - collect_dttm
+  - specimen_category
+  - consent_category
+
+category_columns:
+  - specimen_category
+  - consent_category
+
+group_columns: []

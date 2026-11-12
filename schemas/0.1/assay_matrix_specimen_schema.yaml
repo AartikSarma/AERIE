@@ -1,0 +1,50 @@
+table_name: assay_matrix_specimen
+version: "3.0"  # CLIF version whose conventions AERIE follows; clifpy stamps this on validation results
+aerie_version: "0.1"
+
+columns:
+- name: matrix_id
+  data_type: VARCHAR
+  required: true
+  is_category_column: false
+  is_group_column: false
+- name: specimen_id
+  data_type: VARCHAR
+  required: true
+  is_category_column: false
+  is_group_column: false
+- name: result_specimen_key
+  data_type: VARCHAR
+  required: false
+  is_category_column: false
+  is_group_column: false
+- name: sample_batch_name
+  data_type: VARCHAR
+  required: false
+  is_category_column: false
+  is_group_column: false
+- name: qc_name
+  data_type: VARCHAR
+  required: false
+  is_category_column: false
+  is_group_column: false
+- name: qc_category
+  data_type: VARCHAR
+  required: true
+  is_category_column: true
+  is_group_column: false
+  permissible_values:
+  - pass
+  - fail
+  - flagged
+  - na
+
+required_columns:
+  - matrix_id
+  - specimen_id
+  - qc_category
+
+category_columns:
+  - qc_category
+
+group_columns: []

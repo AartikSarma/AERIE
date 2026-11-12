@@ -1,0 +1,116 @@
+table_name: assay_run
+version: "3.0"  # CLIF version whose conventions AERIE follows; clifpy stamps this on validation results
+aerie_version: "0.1"
+
+columns:
+- name: assay_run_id
+  data_type: VARCHAR
+  required: true
+  is_category_column: false
+  is_group_column: false
+- name: assay_name
+  data_type: VARCHAR
+  required: false
+  is_category_column: false
+  is_group_column: false
+- name: assay_category
+  data_type: VARCHAR
+  required: true
+  is_category_column: true
+  is_group_column: false
+  permissible_values:
+  - elisa
+  - luminex
+  - olink
+  - somascan
+  - ms_proteomics
+  - qpcr
+  - snp_genotyping
+  - sanger_sequencing
+  - targeted_sequencing
+  - long_read_sequencing
+  - rna_seq_bulk
+  - rna_seq_single_cell
+  - microarray_expression
+  - gwas_array
+  - wes
+  - wgs
+  - methylation_epic
+  - methylation_450k
+  - lc_ms_metabolomics
+  - gc_ms_metabolomics
+  - nmr_metabolomics
+  - '16s_amplicon'
+  - shotgun_metagenomics
+  - flow_cytometry
+  - mass_cytometry
+  - other
+- name: assay_group
+  data_type: VARCHAR
+  required: true
+  is_category_column: false
+  is_group_column: true
+  permissible_values:
+  - proteomics
+  - transcriptomics
+  - genomics
+  - epigenomics
+  - metabolomics
+  - microbiomics
+  - cytometry
+  - targeted_immunoassay
+  - other
+- name: result_storage_category
+  data_type: VARCHAR
+  required: true
+  is_category_column: true
+  is_group_column: false
+  permissible_values:
+  - rows
+  - matrix
+- name: assay_dttm
+  data_type: DATETIME
+  required: false
+  is_category_column: false
+  is_group_column: false
+
+required_columns:
+  - assay_run_id
+  - assay_category
+  - assay_group
+  - result_storage_category
+
+category_columns:
+  - assay_category
+  - result_storage_category
+
+group_columns:
+  - assay_group
+
+assay_category_to_group_mapping:
+  elisa: targeted_immunoassay
+  luminex: targeted_immunoassay
+  olink: proteomics
+  somascan: proteomics
+  ms_proteomics: proteomics
+  qpcr: transcriptomics
+  snp_genotyping: genomics
+  sanger_sequencing: genomics
+  targeted_sequencing: genomics
+  long_read_sequencing: genomics
+  rna_seq_bulk: transcriptomics
+  rna_seq_single_cell: transcriptomics
+  microarray_expression: transcriptomics
+  gwas_array: genomics
+  wes: genomics
+  wgs: genomics
+  methylation_epic: epigenomics
+  methylation_450k: epigenomics
+  lc_ms_metabolomics: metabolomics
+  gc_ms_metabolomics: metabolomics
+  nmr_metabolomics: metabolomics
+  '16s_amplicon': microbiomics
+  shotgun_metagenomics: microbiomics
+  flow_cytometry: cytometry
+  mass_cytometry: cytometry
+  other: other
