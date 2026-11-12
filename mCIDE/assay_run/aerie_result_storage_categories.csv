@@ -1,0 +1,3 @@
+result_storage_category,description
+rows,Results are one value per analyte in analyte_result
+matrix,Results are in specimen-by-feature files listed in assay_matrix

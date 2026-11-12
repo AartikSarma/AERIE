@@ -1,4 +1,4 @@
-result_format,description
+file_format_category,description
 csv,Comma-separated values
 tsv,Tab-separated values
 parquet,Apache Parquet
@@ -12,5 +12,5 @@ bam,Binary Alignment Map
 cram,Compressed reference-based alignment
 idat,Illumina array intensity data
 mzml,Mass spectrometry data in mzML
-na,result_uri is a repository accession (e.g. GEO or PRIDE) rather than a file
+na,matrix_uri is a repository accession (e.g. GEO or PRIDE) rather than a file
 other,Any file format not listed above

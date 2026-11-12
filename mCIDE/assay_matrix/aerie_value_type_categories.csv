@@ -1,0 +1,10 @@
+value_type_category,description
+concentration,Absolute concentration in a physical unit
+npx,"Olink normalized protein expression, log2 scale"
+rfu,SomaScan relative fluorescence units
+intensity,Mass spectrometry intensity or peak area
+log2_intensity,Log2 array intensity
+raw_counts,Unnormalized sequencing counts
+normalized_counts,"Library-size normalized counts, e.g. DESeq2 size factors"
+tpm,Transcripts per million
+other,Any value type not listed above; describe it in normalization_method

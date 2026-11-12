@@ -1,0 +1,29 @@
+table_name: study
+version: "3.0"  # CLIF version whose conventions AERIE follows; clifpy stamps this on validation results
+aerie_version: "0.1"
+
+columns:
+- name: study_id
+  data_type: VARCHAR
+  required: true
+  is_category_column: false
+  is_group_column: false
+- name: study_name
+  data_type: VARCHAR
+  required: true
+  is_category_column: false
+  is_group_column: false
+- name: irb_protocol_id
+  data_type: VARCHAR
+  required: true
+  is_category_column: false
+  is_group_column: false
+
+required_columns:
+  - study_id
+  - study_name
+  - irb_protocol_id
+
+category_columns: []
+
+group_columns: []

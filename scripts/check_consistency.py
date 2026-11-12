@@ -4,14 +4,14 @@
 """Check that the AERIE DDL, the mCIDE CSVs, and the clifpy YAML schemas agree.
 
 For every DDL column whose permissible values link to an mCIDE CSV, the bracketed
-list in the DDL must equal the categories in that CSV. For assay_category and
-assay_group, the expected list is restricted to platforms whose aerie_table is the
-DDL table or "either".
+list in the DDL must equal the categories in that CSV, and every mCIDE CSV must be
+linked by at least one column. Every FOREIGN KEY must reference an AERIE table or the
+CLIF patient or hospitalization table.
 
 Each table's YAML schema must list the DDL's columns in the same order with the
 same types, carry the same permissible values, flag required, category, and group
-columns consistently with its summary lists, and map assay_category to assay_group
-as the mCIDE does. Exits non-zero on any mismatch.
+columns consistently with its summary lists, and, for a table with assay_category,
+map assay_category to assay_group as the mCIDE does. Exits non-zero on any mismatch.
 
 Usage: uv run scripts/check_consistency.py [path/to/ddl.sql]
 """
@@ -27,10 +27,12 @@ import yaml
 REPO_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_DDL_PATH = REPO_ROOT / "ddl" / "0.1" / "AERIE0.1_MYSQL_ddl.sql"
 SCHEMA_DIRECTORY = REPO_ROOT / "schemas" / "0.1"
-ASSAY_CATEGORIES_PATH = "mCIDE/common/aerie_assay_categories.csv"
+ASSAY_CATEGORIES_PATH = "mCIDE/assay_run/aerie_assay_categories.csv"
+CLIF_TABLES = {"patient", "hospitalization"}
 MCIDE_LINK_PATTERN = re.compile(r"^\[(?P<values>[^\]]*)\]\(https://github\.com/[^/]+/[^/]+/blob/[^/]+/(?P<path>mCIDE/[^)]+)\)$")
 TABLE_PATTERN = re.compile(r"CREATE TABLE (\w+) \((.*?)\n\);", re.DOTALL)
 COLUMN_PATTERN = re.compile(r"^\s*(\w+) (\w+) COMMENT '(.*)',?$", re.MULTILINE)
+FOREIGN_KEY_PATTERN = re.compile(r"FOREIGN KEY \((\w+)\) REFERENCES (\w+)\((\w+)\)")
 
 
 def read_mcide_rows(csv_path):
@@ -38,26 +40,19 @@ def read_mcide_rows(csv_path):
         return list(csv.DictReader(csv_file))
 
 
-def assay_rows_for_table(table_name):
-    return [row for row in read_mcide_rows(ASSAY_CATEGORIES_PATH) if row["aerie_table"] in (table_name, "either")]
-
-
-def expected_categories(table_name, column_name, csv_path):
-    mcide_rows = read_mcide_rows(csv_path)
-    if column_name == "assay_category":
-        return [row["assay_category"] for row in assay_rows_for_table(table_name)]
-    if column_name == "assay_group":
-        groups_in_table = {row["assay_group"] for row in assay_rows_for_table(table_name)}
-        return [row["assay_group"] for row in mcide_rows if row["assay_group"] in groups_in_table]
-    return [row[column_name] for row in mcide_rows]
+def expected_categories(column_name, csv_path):
+    return [row[column_name] for row in read_mcide_rows(csv_path)]
 
 
 def parse_ddl(ddl_path):
     """Return {table_name: [(column_name, data_type, permissible_values or None)]} and any parse problems."""
     problems = []
     ddl_tables = {}
+    linked_paths = set()
+    foreign_keys = []
     for table_name, table_body in TABLE_PATTERN.findall(Path(ddl_path).read_text()):
         ddl_tables[table_name] = []
+        foreign_keys += [(table_name, *reference) for reference in FOREIGN_KEY_PATTERN.findall(table_body)]
         for column_name, data_type, comment_text in COLUMN_PATTERN.findall(table_body):
             try:
                 comment = json.loads(comment_text)
@@ -68,7 +63,8 @@ def parse_ddl(ddl_path):
             permissible_values = None
             if link_match:
                 permissible_values = [value.strip() for value in link_match["values"].split(",")]
-                mcide_values = expected_categories(table_name, column_name, link_match["path"])
+                linked_paths.add(link_match["path"])
+                mcide_values = expected_categories(column_name, link_match["path"])
                 if permissible_values != mcide_values:
                     problems.append(
                         f"{table_name}.{column_name}: DDL lists {permissible_values} but {link_match['path']} gives {mcide_values}"
@@ -77,6 +73,15 @@ def parse_ddl(ddl_path):
     linked_column_count = sum(values is not None for columns in ddl_tables.values() for _, _, values in columns)
     if linked_column_count == 0:
         problems.append("no columns link to an mCIDE CSV; the link pattern may no longer match the DDL")
+    for csv_path in sorted(path.relative_to(REPO_ROOT).as_posix() for path in (REPO_ROOT / "mCIDE").rglob("*.csv")):
+        if csv_path not in linked_paths:
+            problems.append(f"{csv_path}: no DDL column links to this mCIDE CSV")
+    for table_name, column_name, referenced_table, referenced_column in foreign_keys:
+        if referenced_table in CLIF_TABLES:
+            continue
+        referenced_columns = [name for name, _, _ in ddl_tables.get(referenced_table, [])]
+        if referenced_column not in referenced_columns:
+            problems.append(f"{table_name}.{column_name}: references {referenced_table}.{referenced_column}, which the DDL does not define")
     return ddl_tables, problems
 
 
@@ -104,7 +109,9 @@ def check_yaml_schema(table_name, ddl_columns):
         if sorted(flagged_columns) != sorted(schema[summary_key] or []):
             problems.append(f"{table_name}: columns with {flag} {flagged_columns} differ from {summary_key} {schema[summary_key]}")
 
-    expected_mapping = {row["assay_category"]: row["assay_group"] for row in assay_rows_for_table(table_name)}
+    if "assay_category" not in ddl_permissible:
+        return problems
+    expected_mapping = {row["assay_category"]: row["assay_group"] for row in read_mcide_rows(ASSAY_CATEGORIES_PATH)}
     yaml_mapping = {str(category): group for category, group in schema["assay_category_to_group_mapping"].items()}
     if yaml_mapping != expected_mapping:
         problems.append(f"{table_name}: assay_category_to_group_mapping differs from {ASSAY_CATEGORIES_PATH}")

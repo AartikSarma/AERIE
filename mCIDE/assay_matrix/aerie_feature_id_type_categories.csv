@@ -1,11 +1,14 @@
-analyte_id_type,description,analyte_id_examples
-uniprot,UniProt protein accession; preferred for proteins,"P05231; P01375"
-hgnc,HGNC gene symbol,"IL6; TNF"
+feature_id_type_category,description,feature_id_examples
+uniprot,UniProt protein accession,P05231; P01375
+olink_id,Olink assay identifier,OID20471
+seqid,SomaScan aptamer sequence identifier,10000-28
+hgnc,HGNC gene symbol,IL6; TNF
 ensembl_gene,Ensembl gene identifier,ENSG00000136244
 ensembl_transcript,Ensembl transcript identifier (ENST prefix),
 chebi,ChEBI chemical entity identifier,CHEBI:17234
 hmdb,Human Metabolome Database identifier,HMDB0000122
 kegg,KEGG compound identifier,C00031
+probe_id,Array probe or probe-set identifier; record the platform in annotation_version,ILMN_1343291; cg00000029
 ncbi_taxonomy,NCBI Taxonomy identifier for an organism,1280
 dbsnp,dbSNP reference SNP identifier,rs7412
 loinc,LOINC code for a clinical laboratory test,26881-3

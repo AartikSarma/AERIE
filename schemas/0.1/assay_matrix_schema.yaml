@@ -1,0 +1,124 @@
+table_name: assay_matrix
+version: "3.0"  # CLIF version whose conventions AERIE follows; clifpy stamps this on validation results
+aerie_version: "0.1"
+
+columns:
+- name: matrix_id
+  data_type: VARCHAR
+  required: true
+  is_category_column: false
+  is_group_column: false
+- name: assay_run_id
+  data_type: VARCHAR
+  required: true
+  is_category_column: false
+  is_group_column: false
+- name: matrix_uri
+  data_type: VARCHAR
+  required: true
+  is_category_column: false
+  is_group_column: false
+- name: file_format_category
+  data_type: VARCHAR
+  required: true
+  is_category_column: true
+  is_group_column: false
+  permissible_values:
+  - csv
+  - tsv
+  - parquet
+  - h5ad
+  - h5
+  - mtx
+  - vcf
+  - bcf
+  - fastq
+  - bam
+  - cram
+  - idat
+  - mzml
+  - na
+  - other
+- name: value_type_category
+  data_type: VARCHAR
+  required: true
+  is_category_column: true
+  is_group_column: false
+  permissible_values:
+  - concentration
+  - npx
+  - rfu
+  - intensity
+  - log2_intensity
+  - raw_counts
+  - normalized_counts
+  - tpm
+  - other
+- name: feature_id_type_category
+  data_type: VARCHAR
+  required: true
+  is_category_column: true
+  is_group_column: false
+  permissible_values:
+  - uniprot
+  - olink_id
+  - seqid
+  - hgnc
+  - ensembl_gene
+  - ensembl_transcript
+  - chebi
+  - hmdb
+  - kegg
+  - probe_id
+  - ncbi_taxonomy
+  - dbsnp
+  - loinc
+  - other
+- name: annotation_version
+  data_type: VARCHAR
+  required: false
+  is_category_column: false
+  is_group_column: false
+- name: normalization_method
+  data_type: VARCHAR
+  required: false
+  is_category_column: false
+  is_group_column: false
+- name: n_specimens
+  data_type: INT
+  required: true
+  is_category_column: false
+  is_group_column: false
+- name: n_features
+  data_type: INT
+  required: true
+  is_category_column: false
+  is_group_column: false
+- name: feature_annotation_uri
+  data_type: VARCHAR
+  required: false
+  is_category_column: false
+  is_group_column: false
+- name: file_sha256
+  data_type: VARCHAR
+  required: true
+  is_category_column: false
+  is_group_column: false
+
+required_columns:
+  - matrix_id
+  - assay_run_id
+  - matrix_uri
+  - file_format_category
+  - value_type_category
+  - feature_id_type_category
+  - n_specimens
+  - n_features
+  - file_sha256
+
+category_columns:
+  - file_format_category
+  - value_type_category
+  - feature_id_type_category
+
+group_columns: []
